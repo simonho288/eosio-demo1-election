@@ -1,0 +1,16 @@
+{
+  "name": "election",
+  "version": "1.0.0",
+  "description": "Election WebApp",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "debug": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
