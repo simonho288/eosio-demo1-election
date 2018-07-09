@@ -2,7 +2,7 @@
 <html>
   <head>
   <meta charset="UTF-8">
-  <title>Election Simulation</title>
+  <title>Election dApp</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.css" rel="stylesheet" type="text/css" />
   <style>
     body {
@@ -15,8 +15,89 @@
     <div class="ui container">
       <div class="ui grid">
         <div class="sixteen wide column">
-          <h1 class="ui header">Hello, world...</h1>
+          <h1 class="ui header">Election dApp for EOSIO Blockchain</h1>
         </div>
+
+        <div class="sixteen wide column">
+          <div class="ui message">
+            <div class="header">
+              Voting Procedure
+            </div>
+            <ol class="list">
+              <li>Input your name and click submit</li>
+              <li>Select candidate and click submit</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="sixteen wide column">
+          <form class="ui form">
+            <div class="field">
+              <label>Input your name</label>
+              <input type="text" name="name" placeholder="Name" />
+            </div>
+            <button class="ui button" type="submit">Submit</button>
+          </form>
+        </div>
+
+        <div class="sixteen wide column">
+          <div class="html ui top attached segment">
+            <form class="ui form">
+              <h4 class="ui dividing header">Vote a candidate</h4>
+              <div class="field">
+                <label>Select candidate</label>
+                <div id="candidates_cb" class="ui selection dropdown">
+                  <input type="hidden" name="candidate" />
+                  <i class="dropdown icon"></i>
+                  <div class="default text">Candidate</div>
+                  <div class="menu">
+                    <div class="item" data-value="1">C1</div>
+                    <div class="item" data-value="2">C2</div>
+                  </div>
+                </div>
+              </div>
+              <button class="ui button" type="submit">Submit</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="sixteen wide column">
+          <button class="ui right labeled icon fluid button">
+            Show Voted Result
+            <i class="down chevron icon"></i>
+          </button>
+          <div class="ui two column grid">
+            <div class="column">
+              <div class="ui fluid card">
+                <div class="content">
+                  <div class="center aligned header">Candidate A</div>
+                  <div class="center aligned author">
+                    <div class="ui statistic">
+                      <div class="value">
+                        5,550
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>            
+            <div class="column">
+              <div class="ui fluid card">
+                <div class="content">
+                  <div class="center aligned header">Candidate B</div>
+                  <div class="center aligned author">
+                    <div class="ui statistic">
+                      <div class="value">
+                        5,550
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>            
+          </div>
+        </div>
+
       </div>
     </div>
   </body>
@@ -29,7 +110,7 @@
   <script type="text/javascript">
     $(document).ready(function() {
       var app = new App();
-      app.version();
+      app.start();
     });
   </script>
 </html>
