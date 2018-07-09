@@ -126,7 +126,7 @@ public:
     }
 
     if (keysForModify.size() == 0) {
-      eosio_assert(found, "Invlidate candidate id!");
+      eosio_assert(found, "Invalid candidate id!");
       return;
     }
 
