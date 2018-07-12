@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="UTF-8">
+  <title>Election dApp</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.css" rel="stylesheet" type="text/css" />
+  <style>
+    body {
+      margin: 30px;
+    }
+    #status_portion {
+      display: none;
+    }
+    #input_portion {
+      display: none;
+    }
+    #voting_portion {
+      display: none;
+    }
+    #voted_portion {
+      display: none;
+    }
+    #voted_portion #cards {
+      display: none;
+    }
+  </style>
+  </head>
+
+  <body>
+    <div class="ui container">
+      <div class="ui grid">
+        <div class="sixteen wide column">
+          <h1 class="ui header">Election dApp for EOSIO Blockchain</h1>
+        </div>
+
+        <div id="hints_portion" class="sixteen wide column">
+          <div class="ui message">
+            <div class="header">
+              Voting Procedure
+            </div>
+            <ol class="list">
+              <li>Input your name and click submit</li>
+              <li>Select candidate and click submit</li>
+            </ol>
+          </div>
+        </div>
+
+        <div id="status_portion" class="sixteen wide column">
+          <div class="ui negative message">
+            <div class="header">
+              I'm sorry. The server has error and the program stopped
+            </div>
+            <p>
+              It maybe nodeos has error or not running!
+            </p>
+          </div>
+        </div>
+
+        <div id="input_portion" class="sixteen wide column">
+          <form class="ui form">
+            <div class="field">
+              <label>Input your name</label>
+              <input type="text" name="name" placeholder="Name" />
+            </div>
+            <button id="btn_inputname_submit" class="ui button">Submit</button>
+            <div class="ui error message"></div>
+          </form>
+        </div> <!-- input_portion -->
+
+        <div id="voting_portion" class="sixteen wide column">
+          <div class="html ui top attached segment">
+            <form class="ui form">
+              <h4 class="ui dividing header">Vote a candidate</h4>
+              <div class="field">
+                <label>Select candidate</label>
+                <div id="candidates_cb" name="candidates_cb" class="ui selection dropdown">
+                  <input type="hidden" name="candidate" />
+                  <i class="dropdown icon"></i>
+                  <div class="default text">Candidate</div>
+                  <div class="menu">
+                  </div>
+                </div>
+              </div>
+              <button id="btn_vote_submit" class="ui button">Submit</button>
+            </form>
+          </div>
+        </div> <!-- voting_portion -->
+
+        <div id="voted_portion" class="sixteen wide column">
+          <button id="btn_show_voting_result" class="ui right labeled icon fluid button">
+            Show Voting Result
+          </button>
+          <div id="cards" class="ui two column grid">
+            <!-- Will be rendered by voted_result_card -->
+          </div>
+        </div> <!-- voted_portion -->
+
+      </div>
+    </div>
+
+    <div id="alert_dialog" class="ui modal">
+      <i class="close icon"></i>
+      <div id="title" class="header">
+      </div>
+      <div class="content">
+        <div id="msg" class="description"></div>
+      </div>
+      <div class="actions">
+        <div id="btn_ok" class="ui approve button">OK</div>
+      </div>
+    </div>
+
+    <script id="voted_result_card" type="text/template">
+      <div class="column">
+        <div class="ui fluid card">
+          <div class="content">
+            <div class="center aligned header"><%= name %></div>
+            <div class="center aligned author">
+              <div class="ui statistic">
+                <div class="value">
+                  <%= count %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>            
+    </script>
+
+  </body>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.min.js"></script>
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      var app = new App();
+      app.start();
+    });
+  </script>
+</html>

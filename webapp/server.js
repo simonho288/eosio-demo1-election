@@ -1,4 +1,5 @@
 const express = require('express')
+const bodyParser = require('body-parser')
 const app = express()
 const EosObj = require("./eos_obj.js")
 
@@ -7,6 +8,9 @@ let eosWrapper = new EosObj()
 // Serving static files (html, js, css)
 app.use(express.static('frontend'))
 
+app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.json())
+
 // RESTful API
 app.get('/api/version', async (req, res) => {
   res.setHeader('Content-Type', 'application/json')
@@ -14,9 +18,17 @@ app.get('/api/version', async (req, res) => {
   res.json(status)
 })
 
+app.post('/api/create_account', async (req, res) => {
+  console.log(req.body)
+  let name = req.body.name
+  const account = await eosWrapper.createAccountByName(name)
+  res.setHeader('Content-Type', 'application/json')
+  res.json({account: account})
+})
+
 app.get('/api/candidates', async (req, res) => {
   res.setHeader('Content-Type', 'application/json')
-  let result = await eosWrapper.getCandidateTable()
+  let result = await eosWrapper.getCandidateTable() 
   res.json(result.rows)
 })
 
