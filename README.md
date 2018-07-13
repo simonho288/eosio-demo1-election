@@ -48,6 +48,20 @@ $ cleos create key
 # You must record this active key
 $ cleos wallet import ${private_owner_key}
 $ cleos wallet import ${private_active_key}
+```
+
+Import eosio account's private key
+
+```bash
+$ find ~ -name config.ini
+$ nano ~/.local/share/eosio/nodeos/config/config.ini
+# find the private key at the end of setting signature-provider
+$ cleos wallet import ${private_eosio_key}
+```
+
+Create `election` account
+
+```bash
 $ cleos create account eosio election ${public_owner_key} ${public_active_key}
 ```
 
@@ -67,6 +81,12 @@ Run the local Testnet (nodeos):
 
 ```bash
 $ nodeos -e -p eosio --plugin eosio::wallet_api_plugin --plugin eosio::chain_api_plugin --plugin eosio::history_api_plugin --access-control-allow-origin=* --contracts-console
+```
+
+Install the python3 & pip3
+
+```bash
+$ sudo apt-get -y install python3-pip
 ```
 
 Install the python dependencies in the first time:
