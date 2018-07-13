@@ -21,6 +21,40 @@ $ eosiocpp -g election.abi election.cpp
 
 This requires several steps to create keypairs and accounts before deploying the Smart Contract. Please refer to [the blog post](https://blog.simonho.net/eosio-dapp-blockchain-2/) for steps-by-steps description. It guides you to run the smart contract on your machine successfully.
 
+### Run the Webapp At Your Local PC
+
+Before run the webapp, you'll need to create an EOSIO config file `webapp/eosio-config.ini`. Then put your EOSIO keys & passwords in there:
+
+```ini
+[DEFAULT]
+WALLET_PASSWORD = ${your_default_wallet_password}
+PUBLIC_OWNER_KEY = ${your_public_owner_key}
+PUBLIC_ACTIVE_KEY = ${your_public_active_key}
+```
+
+Run the local Testnet (nodeos):
+
+```bash
+$ nodeos -e -p eosio --plugin eosio::wallet_api_plugin --plugin eosio::chain_api_plugin --plugin eosio::history_api_plugin --access-control-allow-origin=* --contracts-console
+```
+
+Install the python dependencies in the first time:
+
+```bash
+$ cd webapp
+$ source venv/bin/activate
+$ pip install -r requirements.txt
+```
+
+Start the web server:
+
+```bash
+$ npm start
+```
+
+Browse the `http://localhost:5000` to run the demo.
+
+
 ## License
 
 The MIT License (MIT)
