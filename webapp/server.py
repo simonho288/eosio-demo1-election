@@ -3,6 +3,7 @@ import sys
 import json
 import subprocess
 import random
+import configparser
 
 from flask import Flask
 from flask import render_template
@@ -11,12 +12,15 @@ from flask import request
 from subprocess import PIPE
 
 ####################################
-# Functions
+# Configuration
 ####################################
 
-WALLET_PASSWORD = 'PW5KZUB8bdP9dNwMJ2NK154w2Ep1sCbxdJoobqP24DHdSNfeX32j5'
-PUBLIC_OWNER_KEY = 'EOS6G2Lhi7zvrDLQSW1Yyp4orTNTzB5HJLBWsQ6VZ5DHVQP33ZUh4'
-PUBLIC_ACTIVE_KEY = 'EOS6mRVucgY4np6kw5YDEUpEnEhXLfGadMxrWmjUCZkjbFuWWtF2T'
+eosio_config = configparser.ConfigParser()
+eosio_config.read('eosio-config.ini') # Read config file
+
+####################################
+# Functions
+####################################
 
 def cleos(args):
     if isinstance(args, list):
@@ -56,7 +60,7 @@ def get_info():
 
 @app.route('/api/unlock_wallet', methods=['POST'])
 def unlock_wallet():
-    cleos(['wallet', 'unlock', '--password', WALLET_PASSWORD])
+    cleos(['wallet', 'unlock', '--password', eosio_config['DEFAULT']['WALLET_PASSWORD']])
     return '{}'
 
 
@@ -82,7 +86,7 @@ def create_account():
         if result.returncode == 1: # Exit the loop if the account not found
             break
     # Create the account    
-    result = cleos(['create', 'account', 'eosio', account, PUBLIC_OWNER_KEY, PUBLIC_ACTIVE_KEY])
+    result = cleos(['create', 'account', 'eosio', account, eosio_config['DEFAULT']['PUBLIC_OWNER_KEY'], eosio_config['DEFAULT']['PUBLIC_ACTIVE_KEY']])
     if result.returncode == 0:
         return jsonify({'account': account})
     else:
