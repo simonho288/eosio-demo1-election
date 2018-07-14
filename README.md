@@ -21,7 +21,52 @@ $ eosiocpp -g election.abi election.cpp
 
 This requires several steps to create keypairs and accounts before deploying the Smart Contract. Please refer to [the blog post](https://blog.simonho.net/eosio-dapp-blockchain-2/) for steps-by-steps description. It guides you to run the smart contract on your machine successfully.
 
-### Run the Webapp At Your Local PC
+## Run the Webapp At Your Local PC
+
+### Setup EOSIO
+
+- Start the EOSIO services
+
+```bash
+$ nodeos -e -p eosio --plugin eosio::wallet_api_plugin --plugin eosio::chain_api_plugin --plugin eosio::history_api_plugin --access-control-allow-origin=* --contracts-console
+# Start a new Terminal session
+$ keosd --http-server-address=localhost:8899
+# Start a new Terminal session
+$ alias cleos='~/eos/build/programs/cleos/cleos --wallet-url=http://localhost:8899'
+```
+
+### Create the Wallet, Keypairs and Accounts
+
+You'll required to create the wallet, keypairs and account At the first time. Type below commands:
+
+```bash
+$ cleos wallet create
+# You must record the password
+$ cleos create key
+# You must record this owner key
+$ cleos create key
+# You must record this active key
+$ cleos wallet import ${private_owner_key}
+$ cleos wallet import ${private_active_key}
+```
+
+Import eosio account's private key
+
+```bash
+$ find ~ -name config.ini
+$ nano ~/.local/share/eosio/nodeos/config/config.ini
+# find the private key at the end of setting signature-provider
+$ cleos wallet import ${private_eosio_key}
+```
+
+Create `election` account
+
+```bash
+$ cleos create account eosio election ${public_owner_key} ${public_active_key}
+```
+
+
+### Config and run the WebApp
 
 Before run the webapp, you'll need to create an EOSIO config file `webapp/eosio-config.ini`. Then put your EOSIO keys & passwords in there:
 
@@ -36,6 +81,12 @@ Run the local Testnet (nodeos):
 
 ```bash
 $ nodeos -e -p eosio --plugin eosio::wallet_api_plugin --plugin eosio::chain_api_plugin --plugin eosio::history_api_plugin --access-control-allow-origin=* --contracts-console
+```
+
+Install the python3 & pip3
+
+```bash
+$ sudo apt-get -y install python3-pip
 ```
 
 Install the python dependencies in the first time:
