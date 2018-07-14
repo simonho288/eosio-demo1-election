@@ -93,9 +93,11 @@ App.prototype.onBtnInputNameClicked = function(evt) {
   var name = $('#input_portion input[name="name"]').val();
   name = name.trim();
   if (name.length > 0) {
+    $(evt.target).addClass('loading');
     this.createAccountByName(name).done(function(resp) {
       console.info('EOSIO account created successfully');
       console.log(resp);
+      $(evt.target).removeClass('loading');
       self._account = resp.account;
       $('#input_portion #btn_inputname_submit').prop('disabled', true);
       $('#voting_portion').transition('swing down');
@@ -111,9 +113,11 @@ App.prototype.onBtnVoteSubmitClicked = function(evt) {
     return;
   }
   var val = $('#candidates_cb').dropdown('get value')
+  $(evt.target).addClass('loading');
   this.voteCandidate(this._account, val).done(function(resp) {
     console.info('Vote AJAX call result');
     console.log(resp);
+    $(evt.target).removeClass('loading');
     $('#voting_portion #btn_vote_submit').prop('disabled', true);
     self.alertMessage('Congratulation', 'You\'re voted successfully');
     $('#voted_portion').transition('swing down');
@@ -127,7 +131,7 @@ App.prototype.onBtnShowVotingResult = function(evt) {
   // Hide the #hints_portion
   $('#hints_portion').transition({
     animation: 'fade down',
-    duration: '0.5s',
+    duration: '1s',
     onComplete : function() {
       $('#hints_portion').html('');
     }
