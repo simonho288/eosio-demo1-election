@@ -24,7 +24,7 @@ eosio_config.read('eosio-config.ini') # Read config file
 
 def cleos(args):
     if isinstance(args, list):
-        command = ['cleos']
+        command = ['cleos', '--wallet-url=http://localhost:8899']
         command.extend(args)
         command = ' '.join(command)
     else:

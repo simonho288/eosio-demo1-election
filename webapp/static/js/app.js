@@ -112,8 +112,8 @@ App.prototype.onBtnVoteSubmitClicked = function(evt) {
   }
   var val = $('#candidates_cb').dropdown('get value')
   this.voteCandidate(this._account, val).done(function(resp) {
+    console.info('Vote AJAX call result');
     console.log(resp);
-    debugger;
     $('#voting_portion #btn_vote_submit').prop('disabled', true);
     self.alertMessage('Congratulation', 'You\'re voted successfully');
     $('#voted_portion').transition('swing down');
