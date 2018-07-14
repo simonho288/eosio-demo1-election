@@ -128,14 +128,6 @@ App.prototype.onBtnVoteSubmitClicked = function(evt) {
 }
 
 App.prototype.onBtnShowVotingResult = function(evt) {
-  // Hide the #hints_portion
-  $('#hints_portion').transition({
-    animation: 'fade down',
-    duration: '1s',
-    onComplete : function() {
-      $('#hints_portion').html('');
-    }
-  });
   // Show/hide the #voted_portion #cards
   $('#voted_portion #cards').transition('swing down');
 }
