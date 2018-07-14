@@ -19,6 +19,7 @@
     }
     #voted_portion {
       display: none;
+      min-height: 167px;
     }
     #voted_portion #cards {
       display: none;
@@ -30,7 +31,7 @@
     <div class="ui container">
       <div class="ui grid">
         <div class="sixteen wide column">
-          <h1 class="ui header">Election dApp for EOSIO Blockchain</h1>
+          <h1 class="ui header">Election dApp for EOSIO Blockchain Demo</h1>
         </div>
 
         <div id="hints_portion" class="sixteen wide column">
@@ -61,10 +62,10 @@
         <div id="input_portion" class="sixteen wide column">
           <form class="ui form">
             <div class="field">
-              <label>Input your name</label>
+              <label>Input your name (any name is okay)</label>
               <input type="text" name="name" placeholder="Name" />
             </div>
-            <button id="btn_inputname_submit" class="ui button">Submit</button>
+            <button id="btn_inputname_submit" class="ui primary basic button">Submit</button>
             <div class="ui error message"></div>
           </form>
         </div> <!-- input_portion -->
@@ -83,13 +84,13 @@
                   </div>
                 </div>
               </div>
-              <button id="btn_vote_submit" class="ui button">Submit</button>
+              <button id="btn_vote_submit" class="ui primary basic button">Submit</button>
             </form>
           </div>
         </div> <!-- voting_portion -->
 
         <div id="voted_portion" class="sixteen wide column">
-          <button id="btn_show_voting_result" class="ui right labeled icon fluid button">
+          <button id="btn_show_voting_result" class="ui right labeled icon fluid primary basic button">
             Show Voting Result
           </button>
           <div id="cards" class="ui two column grid">

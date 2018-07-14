@@ -130,6 +130,9 @@ App.prototype.onBtnVoteSubmitClicked = function(evt) {
 App.prototype.onBtnShowVotingResult = function(evt) {
   // Show/hide the #voted_portion #cards
   $('#voted_portion #cards').transition('swing down');
+
+  // Scroll to bottom of page
+  $("html, body").animate({ scrollTop: $(document).height() }, 1000);
 }
 
 App.prototype.showVotedResult = function() {
