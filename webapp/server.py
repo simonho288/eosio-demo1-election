@@ -100,6 +100,6 @@ def vote_candidate():
     result = cleos(['push', 'action', 'election', 'vote', param, '-p', account])
     print(result.stderr)
     if result.returncode == 0:
-        return '{}'
+        return jsonify({'result': result.stderr.decode('ascii')})
     else:
         return result.stderr, 500

@@ -95,6 +95,7 @@ App.prototype.onBtnInputNameClicked = function(evt) {
   if (name.length > 0) {
     this.createAccountByName(name).done(function(resp) {
       console.info('EOSIO account created successfully');
+      console.log(resp);
       self._account = resp.account;
       $('#input_portion #btn_inputname_submit').prop('disabled', true);
       $('#voting_portion').transition('swing down');
@@ -111,6 +112,8 @@ App.prototype.onBtnVoteSubmitClicked = function(evt) {
   }
   var val = $('#candidates_cb').dropdown('get value')
   this.voteCandidate(this._account, val).done(function(resp) {
+    console.log(resp);
+    debugger;
     $('#voting_portion #btn_vote_submit').prop('disabled', true);
     self.alertMessage('Congratulation', 'You\'re voted successfully');
     $('#voted_portion').transition('swing down');
