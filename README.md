@@ -23,9 +23,27 @@ This requires several steps to create keypairs and accounts before deploying the
 
 ## Run the Webapp At Your Local PC
 
+In addition to the above prerequisites, you'll need below software installed to run the webapp:
+
+- Python 3.6+
+- Pip3 9.0+
+- (Virtualenv)[https://virtualenv.pypa.io/en/stable/installation/] 16+
+- Npm 3.5+
+
+Install the python3 & pip3
+
+```bash
+$ sudo apt-get update
+$ sudo apt-get install python3.6
+$ sudo apt-get -y install python3-pip
+$ sudo pip install virtualenv
+$ sudo apt-get install nodejs
+$ sudo apt-get install npm
+```
+
 ### Setup EOSIO
 
-- Start the EOSIO services
+Start the EOSIO services
 
 ```bash
 $ nodeos -e -p eosio --plugin eosio::wallet_api_plugin --plugin eosio::chain_api_plugin --plugin eosio::history_api_plugin --access-control-allow-origin=* --contracts-console
@@ -35,7 +53,7 @@ $ keosd --http-server-address=localhost:8899
 $ alias cleos='~/eos/build/programs/cleos/cleos --wallet-url=http://localhost:8899'
 ```
 
-### Create the Wallet, Keypairs and Accounts
+### Create the default Wallet, Keypairs and Accounts
 
 You'll required to create the wallet, keypairs and account At the first time. Type below commands:
 
@@ -59,12 +77,11 @@ $ nano ~/.local/share/eosio/nodeos/config/config.ini
 $ cleos wallet import ${private_eosio_key}
 ```
 
-Create `election` account
+Create the `election` account
 
 ```bash
 $ cleos create account eosio election ${public_owner_key} ${public_active_key}
 ```
-
 
 ### Config and run the WebApp
 
@@ -83,15 +100,10 @@ Run the local Testnet (nodeos):
 $ nodeos -e -p eosio --plugin eosio::wallet_api_plugin --plugin eosio::chain_api_plugin --plugin eosio::history_api_plugin --access-control-allow-origin=* --contracts-console
 ```
 
-Install the python3 & pip3
-
-```bash
-$ sudo apt-get -y install python3-pip
-```
-
 Install the python dependencies in the first time:
 
 ```bash
+$ git clone https://github.com/simonho288/eosio-demo1-election
 $ cd webapp
 $ source venv/bin/activate
 $ pip install -r requirements.txt
@@ -104,7 +116,6 @@ $ npm start
 ```
 
 Browse the `http://localhost:5000` to run the demo.
-
 
 ## License
 

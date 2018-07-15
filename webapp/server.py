@@ -97,6 +97,7 @@ def vote_candidate():
     account = request.form.get('account')
     candidate = request.form.get('candidate')
     param = '\'["' + account + '", ' + candidate + ']\''
+    # Invoke the Smart Contract "vote" action
     result = cleos(['push', 'action', 'election', 'vote', param, '-p', account])
     print(result.stderr)
     if result.returncode == 0:

@@ -34,5 +34,6 @@
     "optional": "cpp",
     "any": "cpp",
     "bitset": "cpp"
-  }
+  },
+  "python.linting.pylintEnabled": false
 }
