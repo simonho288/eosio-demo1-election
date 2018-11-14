@@ -7,7 +7,7 @@ CONTRACT election : public eosio::contract
 private:
   // create the multi index tables to store the data
 
-  struct [[eosio::table]] candidate {
+  TABLE candidate {
     uint64_t _key;       // primary key
     std::string _name;   // candidate name
     uint32_t _count = 0; // voted count
@@ -16,7 +16,7 @@ private:
   };
   typedef eosio::multi_index<eosio::name("candidate"), candidate> candidates;
 
-  struct [[eosio::table]] voter {
+  TABLE voter {
     uint64_t _key;
     uint64_t candidatekey; // name of poll
     name _account;   // this account has voted, avoid duplicate voter
