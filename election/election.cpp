@@ -2,52 +2,51 @@
 
 using namespace eosio;
 
-class election : public contract
+CONTRACT election : public eosio::contract
 {
 private:
   // create the multi index tables to store the data
 
-  /// @abi table
-  struct candidate {
+  TABLE candidate {
     uint64_t _key;       // primary key
     std::string _name;   // candidate name
     uint32_t _count = 0; // voted count
 
     uint64_t primary_key() const { return _key; }
   };
-  typedef eosio::multi_index<N(candidate), candidate> candidates;
+  typedef eosio::multi_index<eosio::name("candidate"), candidate> candidates;
 
-  /// @abi table
-  struct voter {
+  TABLE voter {
     uint64_t _key;
-    uint64_t _candidate_key; // name of poll
-    account_name _account;   // this account has voted, avoid duplicate voter
+    uint64_t candidatekey; // name of poll
+    name _account;   // this account has voted, avoid duplicate voter
 
     uint64_t primary_key() const { return _key; }
-    uint64_t candidate_key() const { return _candidate_key; }
+    uint64_t candidate_key() const { return candidatekey; }
   };
-  typedef eosio::multi_index<N(voter), voter, indexed_by<N(_candidate_key), const_mem_fun<voter, uint64_t, &voter::candidate_key>>> voters;
+  typedef eosio::multi_index<name("voter"), voter, indexed_by<name("candidatekey"), const_mem_fun<voter, uint64_t, &voter::candidate_key>>> voters;
 
   // local instances of the multi indexes
-  candidates _candidates;
-  voters _voters;
-  uint64_t _candidates_count;
+  //candidates _candidates;
+  //voters _voters;
+  //uint64_t _candidates_count;
 
 public:
-  election(account_name s) : contract(s), _candidates(s, s), _voters(s, s), _candidates_count(0) {}
+  using contract::contract;
+
+  election(name receiver, name code,  datastream<const char*> ds):contract(receiver, code, ds) {}  
 
   // public methods exposed via the ABI
   // on candidates
 
-  /// @abi action
-  void version() {
+  ACTION version() {
     print("Election Smart Contract version 0.0.1\n");
   };
 
-  /// @abi action
-  void addc(std::string name) {
+  ACTION addc(std::string name) {
     print("Adding candidate ", name, "\n");
 
+    candidates _candidates(_code, _code.value);
     uint64_t key = _candidates.available_primary_key();
 
     // update the table to include a new candidate
@@ -60,8 +59,9 @@ public:
     print("Candidate added successfully. candidate_key = ", key, "\n");
   };
 
-  /// @abi action
-  void reset() {
+  ACTION reset() {
+    candidates _candidates(_code, _code.value);
+    voters _voters(_code, _code.value);
     // Get all keys of _candidates
     std::vector<uint64_t> keysForDeletion;
     for (auto &itr : _candidates) {
@@ -93,17 +93,18 @@ public:
     print("candidates and voters reset successfully.\n");
   };
 
-  /// @abi action
-  void results() {
+  ACTION results() {
+    candidates _candidates(_code, _code.value);
     print("Start listing voted results\n");
     for (auto& item : _candidates) {
       print("Candidate ", item._name, " has voted count: ", item._count, "\n");
     }
   };
 
-  /// @abi action
-  void vote(account_name s, uint64_t candidate_key) {
+  ACTION vote(name s, uint64_t candidate_key) {
     require_auth(s);
+    candidates _candidates(_code, _code.value);
+    voters _voters(_code, _code.value);
 
     bool found = false;
 
@@ -146,10 +147,10 @@ public:
     // Add this user to voters array
     _voters.emplace(get_self(), [&](auto& p) {
       p._key = _voters.available_primary_key();
-      p._candidate_key = candidate_key;
+      p.candidatekey = candidate_key;
       p._account = s;
     });
   };
 };
 
-EOSIO_ABI(election, (version)(reset)(addc)(results)(vote))
+EOSIO_DISPATCH(election, (version)(reset)(addc)(results)(vote))
