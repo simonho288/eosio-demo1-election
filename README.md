@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This repo hosts the source codes for [my blog post](https://blog.simonho.net/eosio-dapp-blockchain-2/). This includes the source code of the EOSIO Smart Contract mentioned in the blog post which to simulate an election.
+This repo hosts the source codes for [my blog post](https://blog.simonho.net/2018/07/eosio-blockchain-dapp-step-by-step-part_8.html). This includes the source code of the EOSIO Smart Contract mentioned in the blog post which to simulate an election.
 
 ## Prerequisites
 
